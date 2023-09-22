@@ -223,8 +223,8 @@ export class PulumiAI {
 
     private async getProgramFor(request: string, onEvent?: (chunk: string) => void): Promise<ProgramResponse> {
         const content = prompt({
-            lang: "JavaScript",
-            langcode: "javascript",
+            lang: "Python",
+            langcode: "python",
             cloud: "AWS",
             region: "us-west-2",
             program: this.program,
