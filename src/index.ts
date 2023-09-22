@@ -81,6 +81,8 @@ ${err.stack || err}`);
 }
 
 export interface Options {
+    languageCode?: string;
+    language?: string;
     /**
      * The OpenAI API key to use.
      */
@@ -129,6 +131,8 @@ export class PulumiAI {
     private openaiApi: openai.OpenAIApi;
     private model: string;
     private temperature: number;
+    private language: string;
+    private languageCode: string;
 
     constructor(options: Options) {
         const configuration = new openai.Configuration({
@@ -141,6 +145,8 @@ export class PulumiAI {
         this.autoDeploy = options.autoDeploy ?? true;
         this.model = options.openaiModel ?? "gpt-4";
         this.temperature = options.openaiTemperature ?? 0;
+        this.language = options.language ?? "Python";
+        this.languageCode = options.languageCode ?? "python";
         if (this.autoDeploy) {
             this.stack = this.initializeStack(options.stackName ?? "dev", options.projectName ?? "pulumi-ai");
         }
@@ -223,8 +229,8 @@ export class PulumiAI {
 
     private async getProgramFor(request: string, onEvent?: (chunk: string) => void): Promise<ProgramResponse> {
         const content = prompt({
-            lang: "Python",
-            langcode: "python",
+            lang: this.language,
+            langcode: this.languageCode,
             cloud: "AWS",
             region: "us-west-2",
             program: this.program,

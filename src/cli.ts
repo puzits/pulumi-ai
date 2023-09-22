@@ -61,7 +61,11 @@ async function run() {
         openaiModel,
         openaiTemperature,
         autoDeploy: true,
+        language: process.argv[2],
+        languageCode: process.argv[2]
     });
+
+    console.info("argument" +process.argv[2])
 
     const rl = readline.createInterface({ input: process.stdin, output: process.stdout, terminal: false });
 
